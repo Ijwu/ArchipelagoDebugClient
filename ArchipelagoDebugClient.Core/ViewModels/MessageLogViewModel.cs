@@ -24,7 +24,7 @@ public class MessageLogViewModel : ViewModelBase
 
     public MessageLogViewModel(SessionProvider sessionProvider) : base(sessionProvider)
     {
-        SendMessageCommand = ReactiveCommand.Create(SendMessage, this.WhenAnyValue(x => x.HasSession, (bool hasSession) => hasSession));
+        SendMessageCommand = ReactiveCommand.Create(SendMessage, this.WhenAnyValue(x => x.HasSession));
 
         sessionProvider.OnSessionChanged += OnSessionChanged;
     }
@@ -48,10 +48,9 @@ public class MessageLogViewModel : ViewModelBase
 
     private void SendMessage()
     {
-        string? message = string.IsNullOrEmpty(ChatMessage) ? null : ChatMessage;
-        if (message is not null)
+        if (!string.IsNullOrEmpty(ChatMessage))
         {
-            Session!.Say(message);
+            Session!.Say(ChatMessage);
         }
         ChatMessage = string.Empty;
     }
