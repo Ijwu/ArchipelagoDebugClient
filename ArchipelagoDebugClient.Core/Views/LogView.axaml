@@ -11,21 +11,27 @@
     <Design.DataContext>
         <data:MessageLogDesignData/>
     </Design.DataContext>
-    <ScrollViewer Name="ScrollArea">
-        <Interaction.Behaviors>
-            <behaviors:LogScrollBehavior/>
-        </Interaction.Behaviors>
-        <ItemsControl ItemsSource="{Binding Messages}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel/>                
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock FontSize="16" TextWrapping="Wrap" Margin="2.5" Inlines="{Binding Converter={StaticResource LogMessageConverter}}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </ScrollViewer>
+	<Grid RowDefinitions="*, Auto">
+		<ScrollViewer Name="ScrollArea" Grid.Row="0" Grid.Column="0">
+			<Interaction.Behaviors>
+				<behaviors:LogScrollBehavior/>
+			</Interaction.Behaviors>
+			<ItemsControl ItemsSource="{Binding Messages}">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<VirtualizingStackPanel/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<TextBlock FontSize="16" TextWrapping="Wrap" Margin="2.5" Inlines="{Binding Converter={StaticResource LogMessageConverter}}"/>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
+		<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+			<TextBox Margin="5" Width="500" Text="{Binding ChatMessage}" />
+			<Button Margin="5" Command="{Binding SendMessageCommand}">Send Message</Button>
+		</StackPanel>
+	</Grid>
 </UserControl>
